@@ -1,0 +1,26 @@
+{
+  "name": "eb-checkin-module",
+  "version": "1.0.0",
+  "description": "Module to return the check-in status for a registrants of an Eventbrite event",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --reporter nyan"
+  },
+  "keywords": [
+    "checkin",
+    "check-in",
+    "eventbrite"
+  ],
+  "engines": {
+    "node": ">=4.2.4"
+  },
+  "author": "Augustine Correa <augustine.correa@hackmum.in> (http://hackmum.in)",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0"
+  },
+  "dependencies": {
+    "bluebird": "^3.4.7"
+  }
+}
