@@ -1,47 +1,46 @@
 'use strict';
 
-'use strict';
+const Promise = require('bluebird');
+const callEventBriteAPI = require('../lib/callAPI');
+const host = 'https://www.eventbriteapi.com/v3';
+const debug = require('debug')('eb-checkin');
 
 /**
- * Get attendees that are checked-in for an event
+ * Get attendees that are checked-in for an Eventbrite event
  * @param {string} accessToken
  * @param {number} eventID
+ * @param {string} flag
  * @return {[string]} 
  */
-const http = require('http');
-const Promise = require('bluebird');
-const debug = require('debug')('meetup-module-checkin');
-const callMeetupAPI = require('../lib/callAPI.js');
-const host = 'https://api.meetup.com';
-                 
-debug('IN initial declaration');
-             
+function getCheckedInAttendees (accessToken, eventID, flag) {  
+  const path = `/events/${eventID}/attendees/?token=${accessToken}`;
+  debug(`Url is ${host + path}`);
+ 
+  return Promise
+          .try(() => callEventBriteAPI(host + path))
+          .then(body => {
+            const result = JSON.parse(body);
+            debug(`Message returned: ${result.attendees}`)
+            return result.attendees;
+          })
+          .filter(attendee =>{
+            return attendee.checked_in == true && attendee.cancelled == false && attendee.refunded == false ;
+          })
+          .map(attendee => {
+            debug(`The filtered attendee name is ${attendee.profile.name}`);
+              return {
+                "name" : attendee.profile.name ,
+                "email" : attendee.profile.email,
+                "evenbrite_id" : attendee.id 
+              }
+          } )
+          .catch(err => {
+            console.error('Error ', err);
+            throw new Error(err);
+          });
 
-
-module.exports = function(accessToken, eventID) {
-        debug('in the callback function');
-        const path = `/2/rsvps?access_token=${accessToken}&event_id=${eventID}&fields=attendance_status`;
-
-
-        var responseString = '';
-        debug(`Url is ${host + path}`);
-                   
-        return Promise.try(() => 
-        callMeetupAPI(host+path))
-                .then(function(result){
-                        //var obj = { 'attendees' : [] };
-                        debug('result payload ' + result );
-                        var payload = JSON.parse(result);
-                        return payload.results;
-                })
-                .then(attendees => {
-                        debug('Attendees received in filter ' + attendees);
-                        return attendees.filter((attendee) => {
-                                        return attendee.attendance_status === 'attended';
-                        });
-                })
-                .catch(function(error){
-                        console.error('Error thrown by meetup-checkin-module ' + error);
-                        throw new Error(error);
-                });
 };
+
+module.exports = {  
+  getCheckedInAttendees
+}
