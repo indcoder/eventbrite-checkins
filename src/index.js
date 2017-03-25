@@ -15,15 +15,27 @@ const debug = require('debug')('eb-checkin');
 function getCheckedInAttendees (accessToken, eventID, flag) {  
   const path = `/events/${eventID}/attendees/?token=${accessToken}`;
   debug(`Url is ${host + path}`);
- 
+
+
+
   return Promise
-          .try(() => callEventBriteAPI(host + path))
+          .try(() =>{
+              if(arguments.length < 2 || (typeof accessToken == undefined) || (eventID == undefined))
+                throw new Error("INCORRECT_ARGUMENTS");
+  
+              if (flag && flag !== 'noshow')
+                throw new Error('INCORRECT_FLAG');
+
+              return callEventBriteAPI(host + path);
+          })
           .then(body => {
             const result = JSON.parse(body);
             debug(`Message returned: ${result.attendees}`)
             return result.attendees;
           })
           .filter(attendee =>{
+            if( flag === 'noshow')
+              return attendee.checked_in == false && attendee.cancelled == false && attendee.refunded == false ;    
             return attendee.checked_in == true && attendee.cancelled == false && attendee.refunded == false ;
           })
           .map(attendee => {

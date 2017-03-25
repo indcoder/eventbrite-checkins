@@ -37,7 +37,7 @@ describe('Given the eventbrite_checkins module test in offline unit mode', funct
       "attendees" : []
     };
     apiCall.resolves(JSON.stringify(input));
-    const checkinsResult = eventbrite_checkins.getCheckedInAttendees();
+    const checkinsResult = eventbrite_checkins.getCheckedInAttendees('dummytoken', 'dummyeventid');
     checkinsResult.then.should.be.a('function'); 
     checkinsResult.catch.should.be.a('function');
   });
@@ -92,7 +92,7 @@ describe('Given the eventbrite_checkins module test in offline unit mode', funct
             {"home": {"city": "Mumbai", "country": "IN", "region": "Maharashtra", "postal_code": "400000",
               "address_1": "Lala Land", "address_2": "Moonlight"}
               }, "cell_phone": "9920220856", 
-              "email": "attendee1@mtp.mtp", "name": "Attendee Second"}, "barcodes": [{"status": "used",
+              "email": "attendee2@mtp.mtp", "name": "Attendee Second"}, "barcodes": [{"status": "used",
               "changed": "2017-02-28T13:38:14Z", "created": "2017-02-18T13:15:47Z",
                 "checkin_type": 2, "checkin_method": "search"}], 
                   "checked_in": false, "cancelled": false, "refunded": false, 
@@ -102,7 +102,7 @@ describe('Given the eventbrite_checkins module test in offline unit mode', funct
             {"home": {"city": "Mumbai", "country": "IN", "region": "Maharashtra", "postal_code": "400000",
               "address_1": "Lala Land", "address_2": "Moonlight"}
               }, "cell_phone": "9920220856", 
-              "email": "attendee1@mtp.mtp", "name": "Attendee Third"}, "barcodes": [{"status": "used",
+              "email": "attendee3@mtp.mtp", "name": "Attendee Third"}, "barcodes": [{"status": "used",
               "changed": "2017-02-28T13:38:14Z", "created": "2017-02-18T13:15:47Z",
                 "checkin_type": 2, "checkin_method": "search"}], 
                   "checked_in": true, "cancelled": false, "refunded": false, 
@@ -117,7 +117,7 @@ describe('Given the eventbrite_checkins module test in offline unit mode', funct
 
 
                      { name: 'Attendee Third',
-                       email: 'attendee1@mtp.mtp',
+                       email: 'attendee3@mtp.mtp',
                        evenbrite_id: 1003 } ] ;
 
     apiCall.resolves(JSON.stringify(input));
@@ -133,11 +133,64 @@ describe('Given the eventbrite_checkins module test in offline unit mode', funct
 */
   });
 
-/* TODO
-  it('should return the list of noshow registerants', () => {
-    return true;
+
+  it('should return the list of noshow registerants if flag is noshow', () => {
+    const input = { "attendees": 
+     [
+
+        { "profile": {"first_name": "Attendee", "last_name": "First", "addresses": 
+            {"home": {"city": "Mumbai", "country": "IN", "region": "Maharashtra", "postal_code": "400000",
+              "address_1": "Lala Land", "address_2": "Moonlight"}
+              }, "cell_phone": "9920220856", 
+              "email": "attendee1@mtp.mtp", "name": "Attendee First"}, "barcodes": [{"status": "used",
+              "changed": "2017-02-28T13:38:14Z", "created": "2017-02-18T13:15:47Z",
+                "checkin_type": 2, "checkin_method": "search"}], 
+                  "checked_in": true, "cancelled": false, "refunded": false, 
+                    "status": "Checked In", "id" : 1001},
+
+        { "profile": {"first_name": "Attendee", "last_name": "Second", "addresses": 
+            {"home": {"city": "Mumbai", "country": "IN", "region": "Maharashtra", "postal_code": "400000",
+              "address_1": "Lala Land", "address_2": "Moonlight"}
+              }, "cell_phone": "9920220856", 
+              "email": "attendee2@mtp.mtp", "name": "Attendee Second"}, "barcodes": [{"status": "used",
+              "changed": "2017-02-28T13:38:14Z", "created": "2017-02-18T13:15:47Z",
+                "checkin_type": 2, "checkin_method": "search"}], 
+                  "checked_in": false, "cancelled": false, "refunded": false, 
+                    "status": "Checked In", "id" : 1002},
+
+        { "profile": {"first_name": "Attendee", "last_name": "Third", "addresses": 
+            {"home": {"city": "Mumbai", "country": "IN", "region": "Maharashtra", "postal_code": "400000",
+              "address_1": "Lala Land", "address_2": "Moonlight"}
+              }, "cell_phone": "9920220856", 
+              "email": "attendee3@mtp.mtp", "name": "Attendee Third"}, "barcodes": [{"status": "used",
+              "changed": "2017-02-28T13:38:14Z", "created": "2017-02-18T13:15:47Z",
+                "checkin_type": 2, "checkin_method": "search"}], 
+                  "checked_in": true, "cancelled": false, "refunded": false, 
+                    "status": "Checked In" , "id" : 1003}
+
+
+    ]}; 
+
+    const result = [ { name: 'Attendee Second',
+                       email: 'attendee2@mtp.mtp',
+                       evenbrite_id: 1002 }
+                       ];
+
+    apiCall.resolves(JSON.stringify(input));
+    
+    return eventbrite_checkins.getCheckedInAttendees('dummyaccesstoken', 'dummyeventid', 'noshow').should.eventually.eql(result);
   });
-*/
+
+  it('should throw an error if EB module is invoked with incorrect number of arguments', ()=> {
+       
+    return eventbrite_checkins.getCheckedInAttendees('dummy_access_token').should.eventually.be.rejectedWith("INCORRECT_ARGUMENT");
+  });
+
+  it('should throw an error if EB module is invoked with a wrong flag', ()=> {
+       
+    return eventbrite_checkins.getCheckedInAttendees('dummy_access_token', 'dummy_event_token', 'random').should.eventually.be.rejectedWith("INCORRECT_FLAG");
+  });
+
 });
 
 
