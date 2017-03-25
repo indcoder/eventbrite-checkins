@@ -16,6 +16,11 @@
     "node": ">=4.2.4"
   },
   "author": "Augustine Correa <augustine.correa@hackmum.in> (http://hackmum.in)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/indcoder/eventbrite-checkins"
+  },
+
   "license": "ISC",
   "devDependencies": {
     "chai": "^3.5.0",
