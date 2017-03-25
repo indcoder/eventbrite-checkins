@@ -41,6 +41,8 @@ function getCheckedInAttendees (accessToken, eventID, flag) {
 
 };
 
+
+
 module.exports = {  
   getCheckedInAttendees
 }
