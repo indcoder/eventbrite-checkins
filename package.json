@@ -1,10 +1,10 @@
 {
   "name": "eb-checkin-module",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Module to return the check-in status for a registrants of an Eventbrite event",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --reporter spec  *test*/*" ,
+    "test": "mocha --reporter spec  *test*/*",
     "cover": "istanbul  cover node_modules/mocha/bin/_mocha -- -R spec tests/*"
   },
   "keywords": [
