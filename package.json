@@ -1,6 +1,6 @@
 {
   "name": "eb-checkin-module",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Module to return the check-in status for a registrants of an Eventbrite event",
   "main": "index.js",
   "scripts": {
@@ -20,7 +20,6 @@
     "type": "git",
     "url": "https://github.com/indcoder/eventbrite-checkins"
   },
-
   "license": "ISC",
   "devDependencies": {
     "chai": "^3.5.0",
