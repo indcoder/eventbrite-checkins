@@ -32,8 +32,8 @@ function getCheckedInAttendees (accessToken, eventID, flag) {
           })
           .filter(attendee =>{
             if( flag === 'noshow')
-              return attendee.checked_in == false && attendee.cancelled == false && attendee.refunded == false ;    
-            return attendee.checked_in == true && attendee.cancelled == false && attendee.refunded == false ;
+              return attendee.checked_in === false && attendee.cancelled === false && attendee.refunded === false ;    
+            return attendee.checked_in === true && attendee.cancelled === false && attendee.refunded === false ;
           })
           .map(attendee => {
             debug(`The filtered attendee name is ${attendee.profile.name}`);
