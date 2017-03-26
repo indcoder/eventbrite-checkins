@@ -13,14 +13,11 @@ const debug = require('debug')('eb-checkin');
  * @return {[string]} 
  */
 function getCheckedInAttendees (accessToken, eventID, flag) {  
-  const path = `/events/${eventID}/attendees/?token=${accessToken}`;
-  debug(`Url is ${host + path}`);
-
-
-
   return Promise
           .try(() =>{
-              if(arguments.length < 2 || (typeof accessToken == undefined) || (eventID == undefined))
+              const path = `/events/${eventID}/attendees/?token=${accessToken}`;
+              debug(`Url is ${host + path}`);
+              if(arguments.length < 2 || (typeof accessToken === undefined) || (eventID === undefined))
                 throw new Error("INCORRECT_ARGUMENTS");
   
               if (flag && flag !== 'noshow')
@@ -30,7 +27,7 @@ function getCheckedInAttendees (accessToken, eventID, flag) {
           })
           .then(body => {
             const result = JSON.parse(body);
-            debug(`Message returned: ${result.attendees}`)
+            debug(`Message returned: ${result.attendees}`);
             return result.attendees;
           })
           .filter(attendee =>{
@@ -44,8 +41,8 @@ function getCheckedInAttendees (accessToken, eventID, flag) {
                 "name" : attendee.profile.name ,
                 "email" : attendee.profile.email,
                 "evenbrite_id" : attendee.id 
-              }
-          } )
+              };
+          })
           .catch(err => {
             console.error('Error ', err);
             throw new Error(err);
