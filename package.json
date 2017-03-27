@@ -1,6 +1,6 @@
 {
   "name": "eb-checkin-module",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Module to return the check-in status for a registrants of an Eventbrite event",
   "main": "src/index.js",
   "scripts": {
