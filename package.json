@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "test": "mocha --reporter spec  *test*/*",
-    "cover": "istanbul  cover node_modules/mocha/bin/_mocha -- -R spec tests/*"
+    "cover": "istanbul  cover node_modules/mocha/bin/_mocha -- -R spec tests/*",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "keywords": [
     "checkin",
@@ -30,7 +31,8 @@
     "proxyquire": "^1.7.11",
     "sinon": "^1.17.7",
     "sinon-as-promised": "^4.0.2",
-    "sinon-chai": "^2.8.0"
+    "sinon-chai": "^2.8.0",
+    "semantic-release": "^6.3.2"
   },
   "dependencies": {
     "bluebird": "^3.4.7",
