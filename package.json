@@ -30,12 +30,8 @@
     "istanbul": "^0.4.5",
     "mocha": "^3.2.0",
     "proxyquire": "^1.7.11",
-<<<<<<< HEAD
-    "sinon": "^2.1.0",
-=======
     "semantic-release": "^6.3.2",
     "sinon": "^1.17.7",
->>>>>>> master
     "sinon-as-promised": "^4.0.2",
     "sinon-chai": "^2.8.0"
   },
