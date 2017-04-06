@@ -1,11 +1,12 @@
 {
   "name": "eb-checkin-module",
-  "version": "0.2.0",
+  "version": "0.2.3",
   "description": "Module to return the check-in status for a registrants of an Eventbrite event",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "mocha --reporter spec  *test*/*",
-    "cover": "istanbul  cover node_modules/mocha/bin/_mocha -- -R spec tests/*"
+    "cover": "istanbul  cover node_modules/mocha/bin/_mocha -- -R spec tests/*",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "keywords": [
     "checkin",
@@ -25,14 +26,26 @@
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
     "coveralls": "^2.12.0",
+    "cz-conventional-changelog": "^2.0.0",
     "istanbul": "^0.4.5",
     "mocha": "^3.2.0",
     "proxyquire": "^1.7.11",
+<<<<<<< HEAD
     "sinon": "^2.1.0",
+=======
+    "semantic-release": "^6.3.2",
+    "sinon": "^1.17.7",
+>>>>>>> master
     "sinon-as-promised": "^4.0.2",
     "sinon-chai": "^2.8.0"
   },
   "dependencies": {
-    "bluebird": "^3.4.7"
+    "bluebird": "^3.4.7",
+    "debug": "^2.6.3"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

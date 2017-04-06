@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 [![Build Status](https://travis-ci.org/indcoder/eventbrite-checkins.svg?branch=master)](https://travis-ci.org/indcoder/eventbrite-checkins) [![Coverage Status](https://coveralls.io/repos/github/indcoder/eventbrite-checkins/badge.svg?branch=master)](https://coveralls.io/github/indcoder/eventbrite-checkins?branch=master) [![Code Climate](https://codeclimate.com/github/indcoder/eventbrite-checkins/badges/gpa.svg)](https://codeclimate.com/github/indcoder/eventbrite-checkins)[![NPM](https://nodei.co/npm/eb-checkin-module.png)](https://nodei.co/npm/eb-checkin-module/)
 [![dependencies Status](https://david-dm.org/indcoder/eventbrite-checkins/status.svg)](https://david-dm.org/indcoder/eventbrite-checkins)[![bitHound Overall Score](https://www.bithound.io/github/indcoder/eventbrite-checkins/badges/score.svg)](https://www.bithound.io/github/indcoder/eventbrite-checkins) [![Greenkeeper badge](https://badges.greenkeeper.io/indcoder/eventbrite-checkins.svg)](https://greenkeeper.io/)
+=======
+[![Build Status](https://travis-ci.org/indcoder/eventbrite-checkins.svg?branch=master)](https://travis-ci.org/indcoder/eventbrite-checkins) [![Coverage Status](https://coveralls.io/repos/github/indcoder/eventbrite-checkins/badge.svg?branch=master)](https://coveralls.io/github/indcoder/eventbrite-checkins?branch=master) [![Code Climate](https://codeclimate.com/github/indcoder/eventbrite-checkins/badges/gpa.svg)](https://codeclimate.com/github/indcoder/eventbrite-checkins)
+[![dependencies Status](https://david-dm.org/indcoder/eventbrite-checkins/status.svg)](https://david-dm.org/indcoder/eventbrite-checkins)[![bitHound Overall Score](https://www.bithound.io/github/indcoder/eventbrite-checkins/badges/score.svg)](https://www.bithound.io/github/indcoder/eventbrite-checkins)[![NPM](https://nodei.co/npm/eb-checkin-module.png)](https://nodei.co/npm/eb-checkin-module/)
+>>>>>>> master
 
 # eventbrite-checkins
 
