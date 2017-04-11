@@ -11,7 +11,7 @@ const debug = require('debug')('eb-checkin');
  * @return {[string]}
  */
 
-function getCheckedInAttendees(accessToken, eventID, flag) {
+function getAttendeesForEvent(accessToken, eventID, flag) {
   return Promise
           .try(() =>{
             const path = `/events/${eventID}/attendees/?token=${accessToken}`;
@@ -52,5 +52,5 @@ function getCheckedInAttendees(accessToken, eventID, flag) {
 }
 
 module.exports = {
-  getCheckedInAttendees,
+  getAttendeesForEvent,
 };

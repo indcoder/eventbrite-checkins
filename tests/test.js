@@ -28,7 +28,7 @@ describe('Given the eventbrite_checkins module test in offline unit mode', funct
   });
   
   it('should return a function', () => {
-    (eventbrite_checkins.getCheckedInAttendees).should.be.a('function'); 
+    (eventbrite_checkins.getAttendeesForEvent).should.be.a('function'); 
         
   });
 
@@ -37,7 +37,7 @@ describe('Given the eventbrite_checkins module test in offline unit mode', funct
       "attendees" : []
     };
     apiCall.resolves(JSON.stringify(input));
-    const checkinsResult = eventbrite_checkins.getCheckedInAttendees('dummytoken', 'dummyeventid');
+    const checkinsResult = eventbrite_checkins.getAttendeesForEvent('dummytoken', 'dummyeventid');
     checkinsResult.then.should.be.a('function'); 
     checkinsResult.catch.should.be.a('function');
   });
@@ -46,19 +46,19 @@ describe('Given the eventbrite_checkins module test in offline unit mode', funct
   it('should throw a network error if a connection cannot be made to Eventbrite API endpoint', ()=>{
     const connect_error = new Error("getaddrinfo ENOTFOUND");
     apiCall.rejects(connect_error);
-    return eventbrite_checkins.getCheckedInAttendees('accesstokentestauth', 'eventidtestauth').should.eventually.be.rejectedWith('getaddrinfo ENOTFOUND');
+    return eventbrite_checkins.getAttendeesForEvent('accesstokentestauth', 'eventidtestauth').should.eventually.be.rejectedWith('getaddrinfo ENOTFOUND');
   });
 
   it('should throw an authentication error if incorrect token is sent in api url', () => {
     const auth_error = new Error("INVALID_AUTH");
     apiCall.rejects(auth_error);
-    return eventbrite_checkins.getCheckedInAttendees('dummy_access_token', 'dummy_event_id').should.eventually.be.rejectedWith("INVALID_AUTH");
+    return eventbrite_checkins.getAttendeesForEvent('dummy_access_token', 'dummy_event_id').should.eventually.be.rejectedWith("INVALID_AUTH");
   });
 
   it('should throw the error if EB API returns an error on processing the request', ()=> {
     const argument_error = new Error("ARGUMENTS_ERROR");
     apiCall.rejects(argument_error);
-    return eventbrite_checkins.getCheckedInAttendees('dummy_access_token', 'dummy_event_id').should.eventually.be.rejectedWith("ARGUMENTS_ERROR");
+    return eventbrite_checkins.getAttendeesForEvent('dummy_access_token', 'dummy_event_id').should.eventually.be.rejectedWith("ARGUMENTS_ERROR");
   });
 
   it('should return an empty list when no attendees has checked into the event', () => {
@@ -66,7 +66,7 @@ describe('Given the eventbrite_checkins module test in offline unit mode', funct
       "attendees" : []
     };
     apiCall.resolves(JSON.stringify(input));
-    return eventbrite_checkins.getCheckedInAttendees('dummy_accesss_token', 'dummy_event_id').should.eventually.be.eql([]);
+    return eventbrite_checkins.getAttendeesForEvent('dummy_accesss_token', 'dummy_event_id').should.eventually.be.eql([]);
      
   });
 
@@ -122,9 +122,9 @@ describe('Given the eventbrite_checkins module test in offline unit mode', funct
 
     apiCall.resolves(JSON.stringify(input));
     
-    return eventbrite_checkins.getCheckedInAttendees('dummyaccesstoken', 'dummyeventid').should.eventually.eql(result);
+    return eventbrite_checkins.getAttendeesForEvent('dummyaccesstoken', 'dummyeventid').should.eventually.eql(result);
 /*
-    eventbrite_checkins.getCheckedInAttendees('dummyaccesstoken', 'dummyeventid')
+    eventbrite_checkins.getAttendeesForEvent('dummyaccesstoken', 'dummyeventid')
       .then((obj) =>{
          console.log(obj);
         
@@ -178,17 +178,17 @@ describe('Given the eventbrite_checkins module test in offline unit mode', funct
 
     apiCall.resolves(JSON.stringify(input));
     
-    return eventbrite_checkins.getCheckedInAttendees('dummyaccesstoken', 'dummyeventid', 'noshow').should.eventually.eql(result);
+    return eventbrite_checkins.getAttendeesForEvent('dummyaccesstoken', 'dummyeventid', 'noshow').should.eventually.eql(result);
   });
 
   it('should throw an error if EB module is invoked with incorrect number of arguments', ()=> {
        
-    return eventbrite_checkins.getCheckedInAttendees('dummy_access_token').should.eventually.be.rejectedWith("INCORRECT_ARGUMENT");
+    return eventbrite_checkins.getAttendeesForEvent('dummy_access_token').should.eventually.be.rejectedWith("INCORRECT_ARGUMENT");
   });
 
   it('should throw an error if EB module is invoked with a wrong flag', ()=> {
        
-    return eventbrite_checkins.getCheckedInAttendees('dummy_access_token', 'dummy_event_token', 'random').should.eventually.be.rejectedWith("INCORRECT_FLAG");
+    return eventbrite_checkins.getAttendeesForEvent('dummy_access_token', 'dummy_event_token', 'random').should.eventually.be.rejectedWith("INCORRECT_FLAG");
   });
 
 });
@@ -206,7 +206,7 @@ describe("Given the eb-module in online/connected mode" , function(){
     it("should get the request payload for a known past event ", (done)=>{
       
       const eventbrite_checkins_online = require("../src/index.js");
-      eventbrite_checkins_online.getCheckedInAttendees("<Your Eeventbrite token>", "<Event ID>")
+      eventbrite_checkins_online.getAttendeesForEvent("<Your Eeventbrite token>", "<Event ID>")
                                     .then( data => {
                                       console.log(data);
                                       
@@ -215,7 +215,7 @@ describe("Given the eb-module in online/connected mode" , function(){
                                      
                                     
       
-      //return eventbrite_checkins_online.getCheckedInAttendees("<Your Eeventbrite token>", "<Event ID>").should.eventually.be.a("array");
+      //return eventbrite_checkins_online.getAttendeesForEvent("<Your Eeventbrite token>", "<Event ID>").should.eventually.be.a("array");
     });
 });
 */
