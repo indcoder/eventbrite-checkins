@@ -16,10 +16,11 @@ function getAttendeesForEvent(accessToken, eventID, flag) {
           .try(() =>{
             const path = `/events/${eventID}/attendees/?token=${accessToken}`;
             debug(`Url is ${host + path}`);
+            debug(`Flag is ${flag}`);
             if(arguments.length < 2 || (typeof accessToken === 'undefined') || (eventID === 'undefined')) {
               throw new Error('INCORRECT_ARGUMENTS');
             }
-            if (flag && flag !== 'noshow') {
+            if (flag &&  !(['noshow', 'checkedin', 'all'].includes(flag))) {
               throw new Error('INCORRECT_FLAG');
             }
 
