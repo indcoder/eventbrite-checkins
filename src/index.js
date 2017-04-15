@@ -1,5 +1,5 @@
 const Promise = require('bluebird');
-const callEventBriteAPI = require('../lib/callAPI');
+const callEventBriteAPI = require('minimal-request-promise');
 const host = 'https://www.eventbriteapi.com/v3';
 const debug = require('debug')('eb-checkin');
 
@@ -24,7 +24,7 @@ function getAttendeesForEvent(accessToken, eventID, flag) {
               throw new Error('INCORRECT_FLAG');
             }
 
-            return callEventBriteAPI(host + path);
+            return callEventBriteAPI(host + path, Promise);
           })
           .then(body => {
             const result = JSON.parse(body);

@@ -19,7 +19,7 @@ describe('Given the eventbrite_checkins module test in offline unit mode', funct
   beforeEach(()=>{
     sandbox = sinon.sandbox.create();
     apiCall = sandbox.stub();
-    eventbrite_checkins = proxyquire('../src/index.js', {'../lib/callAPI' : apiCall});
+    eventbrite_checkins = proxyquire('../src/index.js', {'minimal-request-promise' : apiCall});
   });
     
 
