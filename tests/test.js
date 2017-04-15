@@ -122,7 +122,7 @@ describe('Given the eventbrite_checkins module test in offline unit mode', funct
 
     apiCall.resolves(JSON.stringify(input));
     
-    return eventbrite_checkins.getAttendeesForEvent('dummyaccesstoken', 'dummyeventid').should.eventually.eql(result);
+    return eventbrite_checkins.getAttendeesForEvent('dummyaccesstoken', 'dummyeventid', 'checkedin').should.eventually.eql(result);
 /*
     eventbrite_checkins.getAttendeesForEvent('dummyaccesstoken', 'dummyeventid')
       .then((obj) =>{
