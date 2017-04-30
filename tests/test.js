@@ -2,7 +2,6 @@
 
 const sinon = require('sinon');
 var Bluebird = require('bluebird');
-require('sinon-as-promised')(Bluebird);
 const chai = require('chai');
 const should = chai.should();
 const chaiAsPromised = require("chai-as-promised");
