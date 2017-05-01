@@ -17,8 +17,6 @@ branches:
   except:
     - /^v\d+\.\d+\.\d+$/
 
-install:
-  - npm install
 
 script:
   - npm run cover
