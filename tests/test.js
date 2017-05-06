@@ -1,6 +1,5 @@
 const sinon = require('sinon');
 const chai = require('chai');
-const should = chai.should();
 const chaiAsPromised = require('chai-as-promised');
 const proxyquire = require('proxyquire');
 let sandbox;
@@ -8,6 +7,8 @@ let apiCall;
 let eventbriteCheckins;
 chai.use(chaiAsPromised);
 chai.config.includeStack = true;
+
+chai.should();
 
 describe('Given the eventbriteCheckins module test in offline unit mode', ()=> {
   beforeEach(()=>{
