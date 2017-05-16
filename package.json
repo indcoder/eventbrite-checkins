@@ -4,7 +4,7 @@
   "description": "Module to return the check-in status for a registrants of an Eventbrite event",
   "main": "src/index.js",
   "scripts": {
-    "test": "mocha --reporter spec  *test*/*",
+    "test": "snyk test && mocha --reporter spec  *test*/*",
     "cover": "istanbul  cover node_modules/mocha/bin/_mocha -- -R spec tests/*",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "commitmsg": "validate-commit-msg"
@@ -36,7 +36,8 @@
     "semantic-release": "^6.3.2",
     "sinon": "^2.1.0",
     "sinon-chai": "^2.8.0",
-    "validate-commit-msg": "^2.12.1"
+    "validate-commit-msg": "^2.12.1",
+    "snyk": "^1.30.1"
   },
   "dependencies": {
     "bluebird": "^3.4.7",
