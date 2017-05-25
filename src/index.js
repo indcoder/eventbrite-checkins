@@ -20,7 +20,7 @@ function getAttendeesForEvent(accessToken, eventID, flag) {
             if(arguments.length < 2 || (typeof accessToken === 'undefined') || (eventID === 'undefined')) {
               throw new Error('INCORRECT_ARGUMENTS');
             }
-            if (flag && !(['noshow', 'checkedin', 'all'].includes(flag))) {
+            if (flag && !(['noshow', 'checkedin', 'all'].indexOf(flag) > -1)) {
               throw new Error('INCORRECT_FLAG');
             }
 
