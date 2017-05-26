@@ -20,7 +20,7 @@ function getAttendeesForEvent(accessToken, eventID, flag) {
             if(arguments.length < 2 || (typeof accessToken === 'undefined') || (eventID === 'undefined')) {
               throw new Error('INCORRECT_ARGUMENTS');
             }
-            if (flag && !(['noshow', 'checkedin', 'all'].indexOf(flag) > -1)) {
+            if (flag && !(['noshow', 'checkedin', 'all'].indexOf(flag.toLowerCase()) > -1)) {
               throw new Error('INCORRECT_FLAG');
             }
 
@@ -36,7 +36,7 @@ function getAttendeesForEvent(accessToken, eventID, flag) {
               return attendee;
             }
 
-            else if(flag === 'noshow') {
+            else if(flag.toLowerCase() === 'noshow') {
               return attendee.checked_in === false && attendee.cancelled === false && attendee.refunded === false;
             }
             return attendee.checked_in === true && attendee.cancelled === false && attendee.refunded === false;
