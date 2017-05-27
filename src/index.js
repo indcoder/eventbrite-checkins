@@ -1,6 +1,5 @@
 const IPromise = require('bluebird');
-const callEventBriteAPI = require('minimal-request-promise');
-const host = 'https://www.eventbriteapi.com/v3';
+const rp = require('request-promise');
 const debug = require('debug')('eb-checkin');
 
 /**
@@ -14,8 +13,14 @@ const debug = require('debug')('eb-checkin');
 function getAttendeesForEvent(accessToken, eventID, flag) {
   return IPromise
           .try(() =>{
-            const path = `/events/${eventID}/attendees/?token=${accessToken}`;
-            debug(`Url is ${host + path}`);
+            const options = {
+              uri: `https://www.eventbriteapi.com/v3/events/${eventID}/attendees/`,
+              qs: {
+                token: 'H4VCED4PKIXQJCZ2HOGZ',  // -> uri + '?access_token=xxxxx%20xxxxx'
+              },
+              json: true,
+            };
+            //debug(`Url is ${host + path}`);
             debug(`Flag is ${flag}`);
             if(arguments.length < 2 || (typeof accessToken === 'undefined') || (eventID === 'undefined')) {
               throw new Error('INCORRECT_ARGUMENTS');
@@ -24,12 +29,12 @@ function getAttendeesForEvent(accessToken, eventID, flag) {
               throw new Error('INCORRECT_FLAG');
             }
 
-            return callEventBriteAPI(host + path, Promise);
+            return rp(options);
           })
           .then(body => {
-            const result = JSON.parse(body);
-            debug(`Message returned: ${result.attendees}`);
-            return result.attendees;
+          //  const result = JSON.parse(body);
+            debug(`Message returned: ${body.attendees}`);
+            return body.attendees;
           })
           .filter(attendee =>{
             if(!flag) {

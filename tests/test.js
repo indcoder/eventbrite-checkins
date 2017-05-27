@@ -14,7 +14,7 @@ describe('Given the eventbriteCheckins module test in offline unit mode', ()=> {
   beforeEach(()=>{
     sandbox = sinon.sandbox.create();
     apiCall = sandbox.stub();
-    eventbriteCheckins = proxyquire('../src/index.js', {'minimal-request-promise': apiCall});
+    eventbriteCheckins = proxyquire('../src/index.js', {'request-promise': apiCall});
   });
 
   afterEach(() => {
@@ -63,7 +63,7 @@ describe('Given the eventbriteCheckins module test in offline unit mode', ()=> {
     const input = {
       'attendees': [],
     };
-    apiCall.resolves(JSON.stringify(input));
+    apiCall.resolves(input);
     return eventbriteCheckins.getAttendeesForEvent('dummy_accesss_token', 'dummy_event_id').should.eventually.be.eql([]);
 
   });
@@ -117,7 +117,7 @@ describe('Given the eventbriteCheckins module test in offline unit mode', ()=> {
       email: 'attendee3@mtp.mtp',
       evenbriteID: 1003 }];
 
-    apiCall.resolves(JSON.stringify(input));
+    apiCall.resolves(input);
 
     return eventbriteCheckins
             .getAttendeesForEvent('dummyaccesstoken', 'dummyeventid', 'checkedin')
@@ -173,7 +173,7 @@ describe('Given the eventbriteCheckins module test in offline unit mode', ()=> {
       evenbriteID: 1002 },
     ];
 
-    apiCall.resolves(JSON.stringify(input));
+    apiCall.resolves(input);
 
     return eventbriteCheckins
             .getAttendeesForEvent('dummyaccesstoken', 'dummyeventid', 'noshow')
