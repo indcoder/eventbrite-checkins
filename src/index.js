@@ -16,11 +16,10 @@ function getAttendeesForEvent(accessToken, eventID, flag) {
             const options = {
               uri: `https://www.eventbriteapi.com/v3/events/${eventID}/attendees/`,
               qs: {
-                token: 'H4VCED4PKIXQJCZ2HOGZ',  // -> uri + '?access_token=xxxxx%20xxxxx'
+                token: accessToken,  // -> uri + '?access_token=xxxxx%20xxxxx'
               },
               json: true,
             };
-            //debug(`Url is ${host + path}`);
             debug(`Flag is ${flag}`);
             if(arguments.length < 2 || (typeof accessToken === 'undefined') || (eventID === 'undefined')) {
               throw new Error('INCORRECT_ARGUMENTS');

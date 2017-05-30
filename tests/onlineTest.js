@@ -1,0 +1,6 @@
+const eventbriteCheckinsOnline = require('../src/index.js');
+eventbriteCheckinsOnline.getAttendeesForEvent('<EVENTBRITE TOKEN>', '<EVENT ID>')
+                                    .then(data => {
+                                      console.log(data);
+
+                                    });                                  
