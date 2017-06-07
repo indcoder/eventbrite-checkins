@@ -31,7 +31,6 @@ function getAttendeesForEvent(accessToken, eventID, flag) {
             return rp(options);
           })
           .then(body => {
-          //  const result = JSON.parse(body);
             debug(`Message returned: ${body.attendees}`);
             return body.attendees;
           })
