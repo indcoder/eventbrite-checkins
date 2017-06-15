@@ -58,8 +58,36 @@ function getAttendeesForEvent(accessToken, eventID, flag) {
       throw new Error(err);
     });
 
+};
+
+function hasRegisteredForEvent(accessToken, eventID, attendeeID) {
+  return IPromise
+    .try(() =>{
+      const options = {
+        uri: `https://www.eventbriteapi.com/v3/events/${eventID}/attendees/${attendeeID}`,
+        qs: {
+          token: accessToken, // -> uri + '?access_token=xxxxx%20xxxxx'
+        },
+        json: true,
+      };
+      if(arguments.length < 3 || (typeof accessToken === 'undefined') || (eventID === 'undefined') || (attendeeID === 'undefined')) {
+        throw new Error('INCORRECT_ARGUMENTS');
+      }
+      return rp(options);
+    })
+    .then(body =>{
+      if(body.id === attendeeID)
+      {return true;}
+      return false;   
+
+    })
+    .catch(error => {
+      console.error(`Error thrown during invocation ${error}`);
+      throw error;
+    });
 }
 
 module.exports = {
   getAttendeesForEvent,
+  hasRegisteredForEvent,
 };

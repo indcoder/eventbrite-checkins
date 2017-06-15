@@ -4,7 +4,7 @@
   "description": "Module to return the check-in status for a registrants of an Eventbrite event",
   "main": "src/index.js",
   "scripts": {
-    "test": "snyk test && mocha --reporter spec  *test*/*",
+    "test": "mocha --reporter spec  *test*/*",
     "cover": "istanbul  cover node_modules/mocha/bin/_mocha -- -R spec tests/*",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "commitmsg": "validate-commit-msg"
