@@ -26,7 +26,7 @@
   "devDependencies": {
     "chai": "^4.0.2",
     "chai-as-promised": "^7.0.0",
-    "coveralls": "^2.12.0",
+    "coveralls": "^3.0.0",
     "cz-conventional-changelog": "^2.0.0",
     "eslint": "^4.0.0",
     "husky": "^0.15.0-beta.3",
