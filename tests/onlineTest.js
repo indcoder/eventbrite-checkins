@@ -13,5 +13,5 @@ eventbriteCheckinsOnline.hasRegisteredForEvent('<EVENTBRITE TOKEN>', '<EVENT ID>
   })
   .catch(error => {
     console.log(error);
-  })
+  });
 
