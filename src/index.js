@@ -58,7 +58,7 @@ function getAttendeesForEvent(accessToken, eventID, flag) {
       throw new Error(err);
     });
 
-};
+}
 
 function hasRegisteredForEvent(accessToken, eventID, attendeeID) {
   return IPromise
@@ -70,15 +70,15 @@ function hasRegisteredForEvent(accessToken, eventID, attendeeID) {
         },
         json: true,
       };
-      if(arguments.length < 3 || (typeof accessToken === 'undefined') || (eventID === 'undefined') || (attendeeID === 'undefined')) {
+      if(arguments.length < 3 || (typeof accessToken === 'undefined')
+        || (eventID === 'undefined') || (attendeeID === 'undefined')) {
         throw new Error('INCORRECT_ARGUMENTS');
       }
       return rp(options);
     })
     .then(body =>{
-      if(body.id === attendeeID)
-      {return true;}
-      return false;   
+      if(body.id === attendeeID) {return true;}
+      return false;
 
     })
     .catch(error => {
