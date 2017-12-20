@@ -1,3 +1,5 @@
+/* eslint camelcase: 0 */  // --> OFF
+
 const sinon = require('sinon');
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
