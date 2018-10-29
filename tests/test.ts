@@ -1,28 +1,22 @@
 /* eslint camelcase: 0 */  // --> OFF
-
-const sinon = require('sinon');
-const chai = require('chai');
-const chaiAsPromised = require('chai-as-promised');
-const proxyquire = require('proxyquire');
-let sandbox;
-let apiCall;
-let eventbriteCheckins;
-chai.use(chaiAsPromised);
-chai.config.includeStack = true;
+import * as chai from 'chai';
+import * as eventbriteCheckins from '../src/index';
+import * as chaiAsPromised from 'chai-as-promised';
+import * as nock from 'nock';
 
 chai.should();
+chai.use(chaiAsPromised);
 
-describe('Given the eventbriteCheckins module test in offline unit mode', () => {
+let scope: nock.Scope;
+
+describe('Given the eventbriteCheckins module', () => {
   beforeEach(() => {
-    sandbox = sinon.sandbox.create();
-    apiCall = sandbox.stub();
-    eventbriteCheckins = proxyquire('../src/index.js', {
-      'request-promise': apiCall,
-    });
+    scope = nock('https://www.eventbriteapi.com');
+    
   });
 
   afterEach(() => {
-    sandbox.restore();
+    
   });
 
   describe('getEventAttendees', () => {
@@ -31,21 +25,19 @@ describe('Given the eventbriteCheckins module test in offline unit mode', () => 
     });
 
     it('should return a Promise', () => {
-      const input = {
-        attendees: [],
-      };
-      apiCall.resolves(input);
+       
+      scope.get('/v3/events/dummyeventid/attendees/');
       const checkinsResult = eventbriteCheckins.getAttendeesForEvent(
         'dummytoken',
         'dummyeventid'
       );
+
       checkinsResult.then.should.be.a('function');
       checkinsResult.catch.should.be.a('function');
     });
 
     it('should throw a network error if a connection cannot be made to Eventbrite API endpoint', () => {
-      const connectError = new Error('getaddrinfo ENOTFOUND');
-      apiCall.rejects(connectError);
+      
       return eventbriteCheckins
         .getAttendeesForEvent('testtoken', 'testid')
         .should.eventually.be.rejectedWith('getaddrinfo ENOTFOUND');
@@ -53,7 +45,6 @@ describe('Given the eventbriteCheckins module test in offline unit mode', () => 
 
     it('should throw an authentication error if incorrect token is sent in api url', () => {
       const authError = new Error('INVALID_AUTH');
-      apiCall.rejects(authError);
       return eventbriteCheckins
         .getAttendeesForEvent('dummy_access_token', 'dummy_event_id')
         .should.eventually.be.rejectedWith('INVALID_AUTH');
@@ -61,7 +52,6 @@ describe('Given the eventbriteCheckins module test in offline unit mode', () => 
 
     it('should throw the error if EB API returns an error on processing the request', () => {
       const argumentError = new Error('ARGUMENTS_ERROR');
-      apiCall.rejects(argumentError);
       return eventbriteCheckins
         .getAttendeesForEvent('dummy_access_token', 'dummy_event_id')
         .should.eventually.be.rejectedWith('ARGUMENTS_ERROR');
@@ -71,7 +61,6 @@ describe('Given the eventbriteCheckins module test in offline unit mode', () => 
       const input = {
         attendees: [],
       };
-      apiCall.resolves(input);
       return eventbriteCheckins
         .getAttendeesForEvent('dummy_accesss_token', 'dummy_event_id')
         .should.eventually.be.eql([]);
@@ -202,7 +191,7 @@ describe('Given the eventbriteCheckins module test in offline unit mode', () => 
         },
       ];
 
-      apiCall.resolves(input);
+
 
       return eventbriteCheckins
         .getAttendeesForEvent('dummyaccesstoken', 'dummyeventid', 'checkedin')
@@ -333,18 +322,19 @@ describe('Given the eventbriteCheckins module test in offline unit mode', () => 
         },
       ];
 
-      apiCall.resolves(input);
+      
 
       return eventbriteCheckins
         .getAttendeesForEvent('dummyaccesstoken', 'dummyeventid', 'noshow')
         .should.eventually.eql(result);
     });
 
-    it('should throw an error if EB module is invoked with incorrect number of arguments', () => {
-      return eventbriteCheckins
-        .getAttendeesForEvent('dummy_access_token')
-        .should.eventually.be.rejectedWith('INCORRECT_ARGUMENT');
-    });
+    // Moving to Typescript has made this redundant
+    // it('should throw an error if EB module is invoked with incorrect number of arguments', () => {
+    //   return eventbriteCheckins
+    //     .getAttendeesForEvent('dummy_access_token')
+    //     .should.eventually.be.rejectedWith('INCORRECT_ARGUMENT');
+    // });
 
     it('should throw an error if EB module is invoked with a wrong flag', () => {
       return eventbriteCheckins
@@ -366,7 +356,7 @@ describe('Given the eventbriteCheckins module test in offline unit mode', () => 
       const input = {
         attendees: [],
       };
-      apiCall.resolves(input);
+      
       const checkinsResult = eventbriteCheckins.hasRegisteredForEvent(
         'dummytoken',
         'dummyeventid',
