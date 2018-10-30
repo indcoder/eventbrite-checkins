@@ -16,17 +16,16 @@ describe('Given the eventbriteCheckins module', () => {
   });
 
   afterEach(() => {
-    
+    nock.cleanAll();
   });
 
+  
   describe('getEventAttendees', () => {
     it('is a function', () => {
       eventbriteCheckins.getAttendeesForEvent.should.be.a('function');
     });
 
     it('should return a Promise', () => {
-       
-      scope.get('/v3/events/dummyeventid/attendees/');
       const checkinsResult = eventbriteCheckins.getAttendeesForEvent(
         'dummytoken',
         'dummyeventid'
@@ -38,9 +37,13 @@ describe('Given the eventbriteCheckins module', () => {
 
     it('should throw a network error if a connection cannot be made to Eventbrite API endpoint', () => {
       
+      scope
+      .get('/v3/events/eventID/attendees/')
+      .reply(404);
+
       return eventbriteCheckins
-        .getAttendeesForEvent('testtoken', 'testid')
-        .should.eventually.be.rejectedWith('getaddrinfo ENOTFOUND');
+        .getAttendeesForEvent('testtoken', 'eventID')
+        .should.eventually.be.empty;
     });
 
     it('should throw an authentication error if incorrect token is sent in api url', () => {
