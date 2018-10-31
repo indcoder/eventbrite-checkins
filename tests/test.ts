@@ -47,25 +47,37 @@ describe('Given the eventbriteCheckins module', () => {
     });
 
     it('should throw an authentication error if incorrect token is sent in api url', () => {
-      const authError = new Error('INVALID_AUTH');
+      // const authError = new Error('INVALID_AUTH');
+      scope
+      .get('/v3/events/eventID/attendees/')
+      .reply(404);
+
       return eventbriteCheckins
-        .getAttendeesForEvent('dummy_access_token', 'dummy_event_id')
-        .should.eventually.be.rejectedWith('INVALID_AUTH');
+        .getAttendeesForEvent('dummy_access_token', 'eventID')
+        .should.eventually.be.empty;
     });
 
     it('should throw the error if EB API returns an error on processing the request', () => {
+      scope
+      .get('/v3/events/eventID/attendees/')
+      .reply(404);
       const argumentError = new Error('ARGUMENTS_ERROR');
       return eventbriteCheckins
-        .getAttendeesForEvent('dummy_access_token', 'dummy_event_id')
-        .should.eventually.be.rejectedWith('ARGUMENTS_ERROR');
+        .getAttendeesForEvent('dummy_access_token', 'eventID')
+        .should.eventually.be.empty;
     });
 
     it('should return an empty list when no attendees has checked into the event', () => {
+      
+      scope
+        .get('/v3/events/eventID/attendees/')
+        .reply(404);
+
       const input = {
         attendees: [],
       };
       return eventbriteCheckins
-        .getAttendeesForEvent('dummy_accesss_token', 'dummy_event_id')
+        .getAttendeesForEvent('dummy_accesss_token', 'eventID')
         .should.eventually.be.eql([]);
     });
 

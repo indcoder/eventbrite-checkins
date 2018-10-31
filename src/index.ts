@@ -29,7 +29,7 @@ export async function  getAttendeesForEvent(accessToken: string, eventID: string
     console.log('URL is ' + `https://www.eventbriteapi.com/v3/events/${eventID}/attendees/`);    
     const response = await got.get(`https://www.eventbriteapi.com/v3/events/${eventID}/attendees/`, {json: true});
     
-     return response.body;
+    return response.body;
       //   .body => {
       //   debug(`Message returned: ${body.attendees}`);
       //   return body.attendees;
