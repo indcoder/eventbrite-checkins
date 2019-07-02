@@ -1,12 +1,13 @@
 language: node_js
 cache:
-  yarn : true
   directories:
     - node_modules
 notifications:
   email: false
 node_js:
-  - '7'
+  - '10'
+  - '11'
+  - '8'
   - '6'
   
 before_script:

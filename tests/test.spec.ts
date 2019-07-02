@@ -1,11 +1,6 @@
-/* eslint camelcase: 0 */  // --> OFF
-import * as chai from 'chai';
-import * as eventbriteCheckins from '../src/index';
-import * as chaiAsPromised from 'chai-as-promised';
+import * as eventbriteCheckins from '../src/ebcheckins';
 import * as nock from 'nock';
 
-chai.should();
-chai.use(chaiAsPromised);
 
 let scope: nock.Scope;
 
@@ -19,10 +14,12 @@ describe('Given the eventbriteCheckins module', () => {
     nock.cleanAll();
   });
 
+  afterAll(nock.restore);
+
   
   describe('getEventAttendees', () => {
     it('is a function', () => {
-      eventbriteCheckins.getAttendeesForEvent.should.be.a('function');
+      expect( typeof eventbriteCheckins.getAttendeesForEvent).toBe('string');
     });
 
     it('should return a Promise', () => {
@@ -30,27 +27,32 @@ describe('Given the eventbriteCheckins module', () => {
         'dummytoken',
         'dummyeventid'
       );
-
-      checkinsResult.then.should.be.a('function');
-      checkinsResult.catch.should.be.a('function');
+      expect( typeof checkinsResult.then).toBe('function');
+      // checkinsResult.then.should.be.a('function');
+      // checkinsResult.catch.should.be.a('function');
     });
 
     it('should throw a network error if a connection cannot be made to Eventbrite API endpoint', () => {
       
       scope
       .get('/v3/events/eventID/attendees/')
-      .reply(404);
+      .replyWithError({code: 'ETIMEOUT'});
 
       return eventbriteCheckins
         .getAttendeesForEvent('testtoken', 'eventID')
-        .should.eventually.be.empty;
+        //.should.eventually.be.empty;
+        .then(res => expect(res).toBe(''));
     });
 
     it('should throw an authentication error if incorrect token is sent in api url', () => {
-      const authError = new Error('INVALID_AUTH');
+      scope
+      .get('/v3/events/eventID/attendees/')
+      .replyWithError({code: 'INVALID_AUTH'});
+
       return eventbriteCheckins
         .getAttendeesForEvent('dummy_access_token', 'dummy_event_id')
-        .should.eventually.be.rejectedWith('INVALID_AUTH');
+        //.should.eventually.be.rejectedWith('INVALID_AUTH');
+        .then()
     });
 
     it('should throw the error if EB API returns an error on processing the request', () => {

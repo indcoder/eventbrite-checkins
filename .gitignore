@@ -35,3 +35,20 @@ jspm_packages
 
 # Optional REPL history
 .node_repl_history
+
+#Typescript output
+dist
+compiled
+
+# Code Editor specific files
+.vscode
+
+# Mac fluff
+.DS_Store
+
+# Generated documents
+docs
+
+
+#
+.rpt2_cache

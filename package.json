@@ -1,15 +1,26 @@
 {
   "name": "eb-checkin-module",
   "version": "1.1.0",
-  "description": "Module to return the check-in status for a registrants of an Eventbrite event",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "description": "Module to return the check-in status of registrants for an Eventbrite event",
+  "main": "dist/index.umd.js",
+  "typings": "dist/types/index.d.ts",
+  "module": "dist/index.es5.js",
   "scripts": {
-    "test": "snyk test && mocha --reporter spec  *test*/*",
-    "cover": "istanbul  cover node_modules/mocha/bin/_mocha -- -R spec tests/*",
+    "lint": "tslint --project tsconfig.json -t codeFrame 'src/**/*.ts' 'tests/**/*.ts",
+    "prebuild": "rimraf dist",
+    "build": "tsc --module commonjs && rollup -c rollup.config.ts && typedoc --out docs --target es6 --theme minimal --mode file src",
+    "start": "rollup -c rollup.config.ts -w",
+    "test": "snyk test && jest --coverage",
+    "test:watch": "jest --coverage --watch",
+    "test:prod": "npm run lint && npm run test -- --no-cache",
+    "deploy-docs": "ts-node tools/gh-pages-publish",
+    "report-coverage": "cat ./coverage/lcov.info | coveralls",
+    "commit": "git-cz",
+    "semantic-release-prepare": "ts-node tools/semantic-release-prepare",
+    "precommit": "lint-staged",
+    "travis-deploy-once": "travis-deploy-once",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
-    "commitmsg": "validate-commit-msg",
-    "onlytest": "mocha --reporter spec  *test*/*"
+    "commitmsg": "validate-commit-msg"
   },
   "keywords": [
     "checkin",
@@ -17,7 +28,7 @@
     "eventbrite"
   ],
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=6.0.0"
   },
   "author": "Augustine Correa <augustine.correa@hackmum.in> (http://hackmum.in)",
   "repository": {
@@ -25,36 +36,96 @@
     "url": "https://github.com/indcoder/eventbrite-checkins"
   },
   "license": "ISC",
-  "devDependencies": {
-    "@types/chai": "^4.1.7",
-    "@types/chai-as-promised": "^7.1.0",
-    "@types/debug": "0.0.31",
-    "@types/mocha": "^5.2.5",
-    "@types/nock": "^9.3.0",
-    "@types/sinon": "^5.0.5",
-    "chai": "^4.0.2",
-    "chai-as-promised": "^7.0.0",
-    "coveralls": "^3.0.0",
-    "cz-conventional-changelog": "^2.0.0",
-    "eslint": "^4.0.0",
-    "husky": "^0.15.0-beta.3",
-    "istanbul": "^0.4.5",
-    "mocha": "^4.0.0",
-    "nock": "^10.0.1",
-    "semantic-release": "^11.0.2",
-    "snyk": "^1.105.0",
-    "ts-node": "^7.0.1",
-    "typescript": "^3.1.3",
-    "validate-commit-msg": "^2.14.0"
-  },
-  "dependencies": {
-    "@types/got": "^8.3.4",
-    "debug": "^3.1.0",
-    "got": "^9.2.2"
+  "lint-staged": {
+    "{src,test}/**/*.ts": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testEnvironment": "node",
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/test/"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 90,
+        "functions": 95,
+        "lines": 95,
+        "statements": 95
+      }
+    },
+    "collectCoverageFrom": [
+      "src/*.{js,ts}"
+    ]
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "devDependencies": {
+    "@types/debug": "0.0.31",
+    "@types/nock": "^9.3.0",
+    "nock": "^10.0.2",
+    "snyk": "^1.110.0",
+    "validate-commit-msg": "^2.14.0",
+    "@commitlint/cli": "^7.1.2",
+    "@commitlint/config-conventional": "^7.1.2",
+    "@types/jest": "^23.3.2",
+    "@types/node": "^10.11.0",
+    "colors": "^1.3.2",
+    "commitizen": "^3.0.0",
+    "coveralls": "^3.0.2",
+    "cross-env": "^5.2.0",
+    "cz-conventional-changelog": "^2.1.0",
+    "husky": "^1.0.1",
+    "jest": "^23.6.0",
+    "jest-config": "^23.6.0",
+    "lint-staged": "^8.0.0",
+    "lodash.camelcase": "^4.3.0",
+    "prettier": "^1.14.3",
+    "prompt": "^1.0.0",
+    "replace-in-file": "^3.4.2",
+    "rimraf": "^2.6.2",
+    "rollup": "^0.67.0",
+    "rollup-plugin-commonjs": "^9.1.8",
+    "rollup-plugin-json": "^3.1.0",
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "rollup-plugin-sourcemaps": "^0.4.2",
+    "rollup-plugin-typescript2": "^0.18.0",
+    "semantic-release": "^15.9.16",
+    "ts-jest": "^23.10.2",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.15.0",
+    "tslint-config-standard": "^8.0.1",
+    "typedoc": "^0.12.0",
+    "typescript": "^3.0.3",
+    "travis-deploy-once": "^5.0.9"
+  },
+  "dependencies": {
+    "@types/got": "^8.3.5",
+    "debug": "^3.2.6",
+    "got": "^9.3.2"
   }
 }

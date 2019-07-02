@@ -1,17 +1,16 @@
-const eventbriteCheckinsOnline = require('../src/index.js');
-/*
-eventbriteCheckinsOnline.getAttendeesForEvent('<EVENTBRITE TOKEN>', '<EVENT ID>')
-  .then(data => {
-    console.log(data);
-  });
+const eventbriteCheckinsOnline = require('../dist/dist/src/index');
 
-*/
-
-eventbriteCheckinsOnline.hasRegisteredForEvent('<EVENTBRITE TOKEN>', '<EVENT ID>', 'ATTENDEE ID')
+eventbriteCheckinsOnline.getAttendeesForEvent('<EVENTBRITE TOKEN>', 1234, 'flag')
   .then(data => {
     console.log(data);
   })
-  .catch(error => {
-    console.log(error);
-  });
+  .catch(err => {console.error(err)});
+
+// eventbriteCheckinsOnline.hasRegisteredForEvent('<EVENTBRITE TOKEN>', '<EVENT ID>', 'ATTENDEE ID')
+//   .then(data => {
+//     console.log(data);
+//   })
+//   .catch(error => {
+//     console.log(error);
+//   });
 
