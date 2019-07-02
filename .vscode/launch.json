@@ -5,87 +5,34 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Run mocha",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
-      "stopOnEntry": false,
-      "args": ["tests/**/*.js", "--no-timeouts"],
-      "cwd": "${workspaceRoot}",
-      "runtimeExecutable": null,
-      "env": { "NODE_ENV": "testing" }
+      "name": "Jest All",
+      "program": "${workspaceFolder}/node_modules/.bin/jest",
+      "args": ["--runInBand"],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "disableOptimisticBPs": true,
+      "windows": {
+        "program": "${workspaceFolder}/node_modules/jest/bin/jest",
+      }
     },
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch Program",
-      "program": "${workspaceRoot}\\src\\index.js"
-    },
-    {
-      "type": "node",
-      "request": "attach",
-      "name": "Attach to Process",
-      "address": "localhost",
-      "port": 5858
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Debug TypeScript in Node.js",
-      "preLaunchTask": null,
-      "program": "${workspaceRoot}/src/index.ts",
-      "cwd": "${workspaceRoot}",
-      "protocol": "inspector",
-      "outFiles": ["${workspaceFolder}/dist/**/.js"]
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "TS w/ mocha",
-      "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
-      "env": {
-        "TS_NODE_PROJECT": "src/tsconfig.specs.json"
-      },
+      "name": "Jest Current File",
+      "program": "${workspaceFolder}/node_modules/.bin/jest",
       "args": [
-        "--ui",
-        "tdd",
-        "--timeout",
-        "4000",
-        "--colors",
-        "--require",
-        "ts-node/register",
-        "${relativeFile}"
+        "${fileBasenameNoExtension}",
+        "--config",
+        "jest.config.js"
       ],
-      "cwd": "${workspaceRoot}",
-      "internalConsoleOptions": "openOnSessionStart"
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Launch current file w/ ts-node",
-      "protocol": "inspector",
-      "args": ["${relativeFile}"],
-      "cwd": "${workspaceRoot}",
-      "runtimeArgs": ["-r", "ts-node/register"],
-      "internalConsoleOptions": "openOnSessionStart"
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Launch current file w/ mocha",
-      "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
-      "args": [
-        "--ui",
-        "tdd",
-        "--timeout",
-        "4000",
-        "--colors",
-        "--require",
-        "ts-node/register",
-        "${relativeFile}"
-      ],
-      "cwd": "${workspaceRoot}",
-      "internalConsoleOptions": "openOnSessionStart"
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "disableOptimisticBPs": true,
+      "windows": {
+        "program": "${workspaceFolder}/node_modules/jest/bin/jest",
+      }
     }
   ]
 }

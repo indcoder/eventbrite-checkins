@@ -1,117 +1,82 @@
-import * as got from 'got'
-const debug = require('debug')('eb-eventbrite')
+import * as rm from 'typed-rest-client/RestClient'
+import { IAttendee, IEBEventAttendees } from './eventbrite-event-attendee-json'
 
-enum AttendanceFlag {
-  'NOSHOW' = 'noshow',
-  'CHECKEDIN' = 'checkedin',
-  'ALL' = 'all'
-}
+type AttendanceFlag = 'NOSHOW' | 'CHECKEDIN' | 'ALL'
 
-interface Attendee {
-  name: string // Name of attendee
-  eb_id: string // Eventbrite ID
-}
+const baseURL: string = 'https://www.eventbriteapi.com/v3/events/'
+const rest: rm.RestClient = new rm.RestClient('ebCheckins', baseURL)
 
 /**
  * Get attendees that are checked-in for an Eventbrite event
  * @param {string} accessToken
  * @param {number} eventID
  * @param {string} flag
- * @return {[string]}
+ * @return {[object]}
  */
 
 export async function getAttendeesForEvent(
   accessToken: string,
   eventID: string,
-  flag?: string
-): Promise<Attendee[]> {
-  debug(`Flag is ${flag}`)
-  // if(arguments.length < 2 || (typeof accessToken === 'undefined') || (eventID === 'undefined')) {
-  //     throw new Error('INCORRECT_ARGUMENTS');
-  //   }
-  if (
-    flag &&
-    !(['noshow', 'checkedin', 'all'].indexOf(flag.toLowerCase()) > -1)
-  ) {
-    throw new Error('INCORRECT_FLAG')
-  }
-
+  flag?: AttendanceFlag
+): Promise<IAttendee[]> {
   try {
-    console.log(
-      'URL is ' +
-        `https://www.eventbriteapi.com/v3/events/${eventID}/attendees/`
-    )
-    const response = await got.get(
-      `https://www.eventbriteapi.com/v3/events/${eventID}/attendees/`,
-      { json: true }
-    )
-    const attendees = await response.body.attendees
-    return attendees
-
-    // return response
-    //     .body => {
-    //     debug(`Message returned: ${body.attendees}`);
-    //     return body.attendees;
-    //   })
-    //   .filter(attendee =>{
-    //     if(!flag) {
-    //       return attendee;
-    //     }
-
-    //     else if(flag.toLowerCase() === 'noshow') {
-    //       return attendee.checked_in === false && attendee.cancelled === false && attendee.refunded === false;
-    //     }
-    //     return attendee.checked_in === true && attendee.cancelled === false && attendee.refunded === false;
-
-    //   })
-    //   .map(attendee => {
-    //     debug(`The filtered attendee name is ${attendee.profile.name}`);
-    //     return {
-    //       'name': attendee.profile.name,
-    //       'email': attendee.profile.email,
-    //       'evenbriteID': attendee.id,
-    //     };
-    //   })
+    const res: rm.IRestResponse<IEBEventAttendees> = await rest.get<
+      IEBEventAttendees
+    >(`${eventID}/attendees/?token=${accessToken}`)
+    if (res.result) {
+      const attendees: IAttendee[] = res.result.attendees
+      switch (flag) {
+        case 'ALL':
+          return attendees
+        case 'NOSHOW':
+          const noshowAttendees: IAttendee[] = []
+          attendees.forEach((attendee: IAttendee) => {
+            if (
+              attendee.checked_in === false &&
+              attendee.refunded === false &&
+              attendee.cancelled === false
+            ) {
+              noshowAttendees.push(attendee)
+            }
+          })
+          return noshowAttendees
+        default:
+          const checkedinAttendees: IAttendee[] = []
+          attendees.forEach((attendee: IAttendee) => {
+            if (attendee.checked_in === true) {
+              checkedinAttendees.push(attendee)
+            }
+          })
+          return checkedinAttendees
+      }
+    } else {
+      throw new Error('Error in processing json payload')
+    }
   } catch (err) {
-    console.error('Error in EB API invocation ', err)
-    // throw new Error(err);
-    return []
+    throw new Error(err)
   }
 }
+/**
+ * Check if the attendee has registered for the Eventbrite event
+ * @param {string} accessToken
+ * @param {number} eventID
+ * @param {string} attendeeID
+ * @return {boolean}
+ */
 
 export async function hasRegisteredForEvent(
   accessToken: string,
   eventID: string,
-  attendeeID?: string
-): Promise<Attendee> {
-  return { eb_id: 'testID', name: 'testname' }
-  // return IPromise
-  //   .try(() =>{
-  //     const options = {
-  //       uri: `https://www.eventbriteapi.com/v3/events/${eventID}/attendees/${attendeeID}`,
-  //       qs: {
-  //         token: accessToken, // -> uri + '?access_token=xxxxx%20xxxxx'
-  //       },
-  //       json: true,
-  //     };
-  //     if(arguments.length < 3 || (typeof accessToken === 'undefined')
-  //       || (eventID === 'undefined') || (attendeeID === 'undefined')) {
-  //       throw new Error('INCORRECT_ARGUMENTS');
-  //     }
-  //     return rp(options);
-  //   })
-  //   .then(body =>{
-  //     if(body.id === attendeeID) {return true;}
-  //     return false;
+  attendeeID: string
+): Promise<boolean> {
+  try {
+    const res: rm.IRestResponse<IAttendee> = await rest.get<IAttendee>(
+      `${eventID}/attendees/${attendeeID}?token=${accessToken}`
+    )
 
-  //   })
-  //   .catch(error => {
-  //     console.error(`Error thrown during invocation ${error}`);
-  //     throw error;
-  //   });
+    return true
+  } catch (err) {
+    // console.error('Error in EB registrant invocation', err);
+    return false
+  }
 }
-
-// module.exports = {
-//   getAttendeesForEvent,
-//   hasRegisteredForEvent,
-// };

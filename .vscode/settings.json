@@ -2,9 +2,12 @@
     "vsicons.presets.angular": false,
     "eslint.enable": true,
     "cSpell.words": [
+        "Checkins",
         "checkedin",
+        "ebcheckins",
         "evenbrite",
         "eventbrite",
-        "noshow"
+        "noshow",
+        "reqheaders"
     ]
 }
