@@ -1,3 +1,4 @@
+sudo:false
 language: node_js
 cache:
   directories:
@@ -8,19 +9,20 @@ node_js:
   - '10'
   - '11'
   - '8'
-  - '6'
+ 
   
-before_script:
-  - npm prune
+before_install:
+  - yarn update
+install:
+  - yarn
 after_success:
-  - npm run semantic-release
+  - yarn semantic-release
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/
 
 
 script:
-  - npm run cover
+  - yarn test
+  - yarn coveralls
 
-# Send coverage data to Coveralls
-after_script: "cat coverage/lcov.info | node_modules/coveralls/bin/coveralls.js"

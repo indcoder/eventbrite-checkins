@@ -8,4 +8,4 @@
 
 # eventbrite-checkins
 
-This npm module will return a JS array consisting of attendees along with their check-in status for an Eventbrite event. The list of attendees will be either those who have been checked-in or noshows depending on the flag when invoking the function. 
+A small npm module to help run our meetups where we query for a registrants's attendance status
