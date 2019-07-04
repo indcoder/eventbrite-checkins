@@ -7,6 +7,7 @@ import {
 import { attendeeMock, ebEventAttendeesMock } from './testdata/attendeefactory'
 
 let scope: nock.Scope
+let intercept: nock.Interceptor
 
 describe('Given the eventbriteCheckins module', () => {
   beforeAll(async () => {
@@ -61,14 +62,18 @@ describe('Given the eventbriteCheckins module', () => {
       })
     })
 
+    beforeEach(() => {
+      intercept = scope.get(
+        '/v3/events/dummyEventID/attendees?token=dummyTestToken'
+      )
+    })
+
     test('is a function', () => {
       expect(typeof eventbriteCheckins.getAttendeesForEvent).toBe('function')
     })
 
     test('should throw a network error if a connection cannot be made to Eventbrite API endpoint', async () => {
-      scope
-        .get('/v3/events/dummyEventID/attendees?token=dummyTestToken')
-        .replyWithError('ETIMEOUT')
+      intercept.replyWithError('ETIMEOUT')
 
       await expect(
         eventbriteCheckins.getAttendeesForEvent(
@@ -79,9 +84,7 @@ describe('Given the eventbriteCheckins module', () => {
     })
 
     test('should throw an authentication error if incorrect token is sent in api url', async () => {
-      scope
-        .get('/v3/events/dummyEventID/attendees?token=dummyTestToken')
-        .replyWithError('INVALID_AUTH')
+      intercept.replyWithError('INVALID_AUTH')
 
       await expect(
         eventbriteCheckins.getAttendeesForEvent(
@@ -108,9 +111,7 @@ describe('Given the eventbriteCheckins module', () => {
     })
 
     test('it should return only checked in attendees', async () => {
-      scope
-        .get('/v3/events/dummyEventID/attendees?token=dummyTestToken')
-        .reply(200, ebEventAttendees)
+      intercept.reply(200, ebEventAttendees)
 
       const result = await eventbriteCheckins.getAttendeesForEvent(
         'dummyTestToken',
@@ -120,9 +121,7 @@ describe('Given the eventbriteCheckins module', () => {
     })
 
     test('it should return no shows registrants when flag is set to NOSHOW', async () => {
-      scope
-        .get('/v3/events/dummyEventID/attendees?token=dummyTestToken')
-        .reply(200, ebEventAttendees)
+      intercept.reply(200, ebEventAttendees)
 
       const result = await eventbriteCheckins.getAttendeesForEvent(
         'dummyTestToken',
@@ -133,9 +132,7 @@ describe('Given the eventbriteCheckins module', () => {
     })
 
     test('it should return all the registrants when flag is set to ALL', async () => {
-      scope
-        .get('/v3/events/dummyEventID/attendees?token=dummyTestToken')
-        .reply(200, ebEventAttendees)
+      intercept.reply(200, ebEventAttendees)
 
       const result = await eventbriteCheckins.getAttendeesForEvent(
         'dummyTestToken',
