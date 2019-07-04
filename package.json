@@ -27,7 +27,7 @@
     "travis-deploy-once": "travis-deploy-once",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "commitmsg": "validate-commit-msg",
-    "coveralls": "jest --coverage && cat ./tests/coverage/lcov.info | coveralls"
+    "coveralls": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
     
   },
   "keywords": [
@@ -36,7 +36,7 @@
     "eventbrite"
   ],
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=8.0.0"
   },
   "author": "Augustine Correa <augustine.correa@hackmum.in> (http://hackmum.in)",
   "repository": {
