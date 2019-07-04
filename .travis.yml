@@ -1,14 +1,8 @@
-sudo: false
 language: node_js
-cache:
-  directories:
-    - node_modules
-notifications:
-  email: false
+
 node_js:
-  - '10'
-  - '11'
-  - '8'
+  - 8
+
    
 jobs:
   include:
@@ -18,13 +12,13 @@ jobs:
       # Advanced: optionally overwrite your default `script` step to skip the tests
       # script: skip
       deploy:
-        provider: script
         skip_cleanup: true
+        provider: script
         script:
           - npx semantic-release
-          - yarn coveralls  
-branches:
-  except:
-    - /^v\d+\.\d+\.\d+$/
+        # Publish test coverage results
+        provider: script
+        script:
+          - yarn coveralls
  
 
