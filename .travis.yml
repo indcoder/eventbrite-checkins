@@ -12,6 +12,7 @@ node_js:
    
 after_success:
   - yarn semantic-release
+  
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/

@@ -1,9 +1,0 @@
-{ "profile": {"first_name": "Attendee", "last_name": "First", "addresses": 
-       {"home": {"city": "Mumbai", "country": "IN", "region": "Maharashtra", "postal_code": "400000",
-        "address_1": "Lala Land", "address_2": "Moonlight"}
-        }, "cell_phone": "9920220856", 
-        "email": "attendee1@mtp.mtp", "name": "Attendee First"}, "barcodes": [{"status": "used",
-         "changed": "2017-02-28T13:38:14Z", "created": "2017-02-18T13:15:47Z",
-          "checkin_type": 2, "checkin_method": "search"}], 
-             "checked_in": true, "cancelled": false, "refunded": false, 
-              "status": "Checked In"}

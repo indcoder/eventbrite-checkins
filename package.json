@@ -1,6 +1,6 @@
 {
   "name": "eb-checkin-module",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Module to return the check-in status of registrants for an Eventbrite event",
   "main": "dist/ebcheckins.umd.js",
   "typings": "dist/types/ebcheckins.d.ts",
