@@ -10,15 +10,21 @@ node_js:
   - '11'
   - '8'
    
-after_success:
-  - yarn semantic-release
-  
+jobs:
+  include:
+    # Define the release stage that runs semantic-release
+    - stage: release
+      node_js: lts/*
+      # Advanced: optionally overwrite your default `script` step to skip the tests
+      # script: skip
+      deploy:
+        provider: script
+        skip_cleanup: true
+        script:
+          - npx semantic-release
+          - yarn coveralls  
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/
-
-
-script:
-  - yarn test
-  - yarn coveralls
+ 
 

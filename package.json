@@ -1,6 +1,6 @@
 {
   "name": "eb-checkin-module",
-  "version": "2.0.0",
+  "version": "0.0.0-development",
   "description": "Module to return the check-in status of registrants for an Eventbrite event",
   "main": "dist/ebcheckins.umd.js",
   "typings": "dist/types/ebcheckins.d.ts",
@@ -22,12 +22,11 @@
     "deploy-docs": "ts-node tools/gh-pages-publish",
     "report-coverage": "cat ./coverage/lcov.info | coveralls",
     "commit": "git-cz",
-    "semantic-release-prepare": "ts-node tools/semantic-release-prepare",
     "precommit": "lint-staged",
     "travis-deploy-once": "travis-deploy-once",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "commitmsg": "validate-commit-msg",
-    "coveralls": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+    "coveralls": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
+    "semantic-release": "semantic-release"
   },
   "keywords": [
     "checkin",
@@ -122,7 +121,7 @@
     "rollup-plugin-node-resolve": "^3.4.0",
     "rollup-plugin-sourcemaps": "^0.4.2",
     "rollup-plugin-typescript2": "^0.18.0",
-    "semantic-release": "^15.9.16",
+    "semantic-release": "^15.13.18",
     "snyk": "^1.191.0",
     "travis-deploy-once": "^5.0.9",
     "ts-jest": "^23.10.2",
