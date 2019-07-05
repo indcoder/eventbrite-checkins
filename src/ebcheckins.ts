@@ -1,7 +1,7 @@
 import * as rm from 'typed-rest-client/RestClient'
 import { IAttendee, IEBEventAttendees } from './eventbrite-event-attendee-json'
 
-type AttendanceFlag = 'NOSHOW' | 'CHECKEDIN' | 'ALL'
+type AttendanceFlag = 'NOSHOW' | 'CHECKEDIN'
 
 const baseURL: string = 'https://www.eventbriteapi.com/v3/events/'
 const rest: rm.RestClient = new rm.RestClient('ebCheckins', baseURL)
