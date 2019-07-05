@@ -7,7 +7,7 @@ const baseURL: string = 'https://www.eventbriteapi.com/v3/events/'
 const rest: rm.RestClient = new rm.RestClient('ebCheckins', baseURL)
 
 /**
- * Get attendees that are checked-in for an Eventbrite event
+ * Get the attendees of an Eventbrite event depending on their attendance status
  * @param {string} accessToken
  * @param {number} eventID
  * @param {string} flag
@@ -26,8 +26,14 @@ export async function getAttendeesForEvent(
     if (res.result) {
       const attendees: IAttendee[] = res.result.attendees
       switch (flag) {
-        case 'ALL':
-          return attendees
+        case 'CHECKEDIN':
+          const checkedinAttendees: IAttendee[] = []
+          attendees.forEach((attendee: IAttendee) => {
+            if (attendee.checked_in === true) {
+              checkedinAttendees.push(attendee)
+            }
+          })
+          return checkedinAttendees
         case 'NOSHOW':
           const noshowAttendees: IAttendee[] = []
           attendees.forEach((attendee: IAttendee) => {
@@ -41,13 +47,7 @@ export async function getAttendeesForEvent(
           })
           return noshowAttendees
         default:
-          const checkedinAttendees: IAttendee[] = []
-          attendees.forEach((attendee: IAttendee) => {
-            if (attendee.checked_in === true) {
-              checkedinAttendees.push(attendee)
-            }
-          })
-          return checkedinAttendees
+          return attendees
       }
     } else {
       throw new Error('Error in processing json payload')
@@ -56,6 +56,7 @@ export async function getAttendeesForEvent(
     throw new Error(err)
   }
 }
+
 /**
  * Check if the attendee has registered for the Eventbrite event
  * @param {string} accessToken

@@ -9,3 +9,5 @@
 # eventbrite-checkins
 
 A small npm module to help run our meetups where we query for a registrants's attendance status
+
+[Click here](https://indcoder.github.io/eventbrite-checkins/) for docs.

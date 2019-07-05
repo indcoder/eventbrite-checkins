@@ -110,12 +110,13 @@ describe('Given the eventbriteCheckins module', () => {
       expect(attendeesEmpty).toBe([])
     })
 
-    test('it should return only checked in attendees', async () => {
+    test('it should return only checked in attendees when flag is set to CHECKEDIN', async () => {
       intercept.reply(200, ebEventAttendees)
 
       const result = await eventbriteCheckins.getAttendeesForEvent(
         'dummyTestToken',
-        'dummyEventID'
+        'dummyEventID',
+        'CHECKEDIN'
       )
       expect(result.length).toBe(3)
     })
@@ -131,13 +132,12 @@ describe('Given the eventbriteCheckins module', () => {
       expect(result.length).toBe(7)
     })
 
-    test('it should return all the registrants when flag is set to ALL', async () => {
+    test('it should return all the registrants when no flag is set', async () => {
       intercept.reply(200, ebEventAttendees)
 
       const result = await eventbriteCheckins.getAttendeesForEvent(
         'dummyTestToken',
-        'dummyEventID',
-        'ALL'
+        'dummyEventID'
       )
       expect(result.length).toBe(10)
     })
