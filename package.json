@@ -92,7 +92,7 @@
   "devDependencies": {
     "@commitlint/cli": "^7.1.2",
     "@commitlint/config-conventional": "^7.1.2",
-    "@types/debug": "0.0.31",
+    "@types/debug": "4.1.5",
     "@types/faker": "^4.1.5",
     "@types/jest": "^23.3.2",
     "@types/nock": "^9.3.0",
