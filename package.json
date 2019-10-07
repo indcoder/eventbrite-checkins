@@ -22,11 +22,10 @@
     "deploy-docs": "ts-node tools/gh-pages-publish",
     "report-coverage": "cat ./coverage/lcov.info | coveralls",
     "commit": "git-cz",
-    "precommit": "lint-staged",
-    "travis-deploy-once": "travis-deploy-once",
-    "commitmsg": "validate-commit-msg",
     "coveralls": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "snyk-protect": "snyk protect",
+    "prepare": "yarn run snyk-protect"
   },
   "keywords": [
     "checkin",
@@ -90,7 +89,7 @@
     ]
   },
   "devDependencies": {
-    "@commitlint/cli": "^7.1.2",
+    "@commitlint/cli": "^8.2.0",
     "@commitlint/config-conventional": "^7.1.2",
     "@types/debug": "4.1.5",
     "@types/faker": "^4.1.5",
@@ -106,24 +105,21 @@
     "factory.ts": "^0.5.0",
     "faker": "^4.1.0",
     "husky": "^1.0.1",
-    "jest": "^23.6.0",
+    "jest": "^24.0.0",
     "jest-config": "^23.6.0",
     "lint-staged": "^9.1.0",
     "lodash.camelcase": "^4.3.0",
-    "microbundle": "^0.11.0",
-    "nock": "^10.0.2",
+    "nock": "^11.0.0",
     "prettier": "^1.14.3",
     "prompt": "^1.0.0",
     "rimraf": "^3.0.0",
-    "rollup": "^1.16.5",
+    "rollup": "^1.20.0",
     "rollup-plugin-commonjs": "^10.0.2",
     "rollup-plugin-json": "^3.1.0",
     "rollup-plugin-node-resolve": "^3.4.0",
     "rollup-plugin-sourcemaps": "^0.4.2",
     "rollup-plugin-typescript2": "^0.22.0",
-    "semantic-release": "^15.13.18",
-    "snyk": "^2.0.0",
-    "travis-deploy-once": "^5.0.9",
+    "semantic-release": "^15.13.25",
     "ts-jest": "^23.10.2",
     "ts-node": "^7.0.1",
     "tslint": "^5.11.0",
@@ -134,6 +130,14 @@
     "validate-commit-msg": "^2.14.0"
   },
   "dependencies": {
+    "snyk": "^1.231.1",
     "typed-rest-client": "^1.5.0"
-  }
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "validate-commit-msg",
+      "pre-commit": "lint-staged"
+    }
+  },
+  "snyk": true
 }
