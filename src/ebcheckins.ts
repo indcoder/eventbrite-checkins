@@ -3,7 +3,7 @@ import { IAttendee, IEBEventAttendees } from './eventbrite-event-attendee-json'
 
 type AttendanceFlag = 'NOSHOW' | 'CHECKEDIN'
 
-const baseURL: string = 'https://www.eventbriteapi.com/v3/events/'
+const baseURL = 'https://www.eventbriteapi.com/v3/events/'
 const rest: rm.RestClient = new rm.RestClient('ebCheckins', baseURL)
 
 /**
@@ -71,7 +71,7 @@ export async function hasRegisteredForEvent(
   attendeeID: string
 ): Promise<boolean> {
   try {
-    const res: rm.IRestResponse<IAttendee> = await rest.get<IAttendee>(
+    await rest.get<IAttendee>(
       `${eventID}/attendees/${attendeeID}?token=${accessToken}`
     )
 
