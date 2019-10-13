@@ -149,5 +149,8 @@
       "pre-commit": "lint-staged"
     }
   },
+  "publishConfig" : {
+    "registry" : "https://npm.pkg.github.com/@indcoder"
+  },
   "snyk": true
 }
