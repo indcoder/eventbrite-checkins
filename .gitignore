@@ -56,3 +56,8 @@ docs
 .rts2_cache_es
 .rts2_cache_umd
 .rts2*
+
+*.tgz
+
+# Codealike
+codealike.json
