@@ -91,7 +91,7 @@
   "devDependencies": {
     "@commitlint/cli": "^8.2.0",
     "@commitlint/config-conventional": "^7.1.2",
-    "@types/debug": "4.1.5",
+    "@types/debug": "^4.1.5",
     "@types/faker": "^4.1.5",
     "@types/jest": "^24.0.16",
     "@types/nock": "^9.3.0",
@@ -140,6 +140,7 @@
     "validate-commit-msg": "^2.14.0"
   },
   "dependencies": {
+    "debug": "^4.1.1",
     "snyk": "^1.231.1",
     "typed-rest-client": "^1.5.0"
   },
@@ -149,8 +150,8 @@
       "pre-commit": "lint-staged"
     }
   },
-  "publishConfig" : {
-    "registry" : "https://npm.pkg.github.com/@indcoder"
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/@indcoder"
   },
   "snyk": true
 }

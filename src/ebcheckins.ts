@@ -1,5 +1,9 @@
+import debug from 'debug'
 import * as rm from 'typed-rest-client/RestClient'
 import { IAttendee, IEBEventAttendees } from './eventbrite-event-attendee-json'
+
+const logger = debug('ebcheckin:module')
+const errorLogger = debug('ebcheckin:error')
 
 type AttendanceFlag = 'NOSHOW' | 'CHECKEDIN'
 
@@ -23,6 +27,9 @@ export async function getAttendeesForEvent(
     const res: rm.IRestResponse<IEBEventAttendees> = await rest.get<
       IEBEventAttendees
     >(`${eventID}/attendees/?token=${accessToken}`)
+
+    logger(`${eventID}/attendees/?token=${accessToken}`)
+
     if (res.result) {
       const attendees: IAttendee[] = res.result.attendees
       switch (flag) {
@@ -53,6 +60,8 @@ export async function getAttendeesForEvent(
       throw new Error('Error in processing json payload')
     }
   } catch (err) {
+    errorLogger(`Error thrown during Eventbrite API invocation: {err
+    }`)
     throw new Error(err)
   }
 }
