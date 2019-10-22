@@ -1,6 +1,6 @@
 {
   "name": "eb-checkin-module",
-  "version": "4.0.1b",
+  "version": "4.0.1",
   "description": "Module to return the check-in status of registrants for an Eventbrite event",
   "main": "dist/ebcheckins.umd.js",
   "typings": "dist/types/ebcheckins.d.ts",
@@ -119,7 +119,7 @@
     "jest-config": "^23.6.0",
     "lint-staged": "^9.1.0",
     "lodash.camelcase": "^4.3.0",
-    "nock": "^11.0.0",
+    "nock": "^11.5.0",
     "prettier": "^1.14.3",
     "prompt": "^1.0.0",
     "rimraf": "^3.0.0",
@@ -149,6 +149,9 @@
       "commit-msg": "validate-commit-msg",
       "pre-commit": "lint-staged"
     }
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/@indcoder"
   },
   "snyk": true
 }
