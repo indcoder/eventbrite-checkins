@@ -8122,10 +8122,10 @@ rollup@^0.63.4:
     "@types/estree" "0.0.39"
     "@types/node" "*"
 
-rollup@^1.20.0:
-  version "1.23.1"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-1.23.1.tgz#0315a0f5d0dfb056e6363e1dff05b89ac2da6b8e"
-  integrity sha512-95C1GZQpr/NIA0kMUQmSjuMDQ45oZfPgDBcN0yZwBG7Kee//m7H68vgIyg+SPuyrTZ5PrXfyLK80OzXeKG5dAA==
+rollup@^1.25.2:
+  version "1.25.2"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-1.25.2.tgz#739f508bd8f7ece52bb6c1fcda83466af82b7f6d"
+  integrity sha512-+7z6Wab/L45QCPcfpuTZKwKiB0tynj05s/+s2U3F2Bi7rOLPr9UcjUwO7/xpjlPNXA/hwnth6jBExFRGyf3tMg==
   dependencies:
     "@types/estree" "*"
     "@types/node" "*"
@@ -8214,10 +8214,10 @@ secure-keys@^1.0.0:
   resolved "https://registry.yarnpkg.com/secure-keys/-/secure-keys-1.0.0.tgz#f0c82d98a3b139a8776a8808050b824431087fca"
   integrity sha1-8MgtmKOxOah3aogIBQuCRDEIf8o=
 
-semantic-release@^15.13.25:
-  version "15.13.25"
-  resolved "https://registry.yarnpkg.com/semantic-release/-/semantic-release-15.13.25.tgz#b20df3e92844fb8934a4668cd166c3d8b130fda9"
-  integrity sha512-hyiSbRkm13wVMKUwwq0nXe9AoRXZYxWttc7cnO7sRb3UjPdsI5rcFXoWvm3cBP/cRn0tUSOkbtCJd1t7vgeNvg==
+semantic-release@^15.13.27:
+  version "15.13.27"
+  resolved "https://registry.yarnpkg.com/semantic-release/-/semantic-release-15.13.27.tgz#214be952fdff5b9ba8490e49c5be13e4d0108ead"
+  integrity sha512-Os9tGsOMCrWqW8cEo0zczoJnZcZzwHAWODmziff+8zU1gwPmLplAicJ5a3L43ubWtAsp2hVPf9WhWj2lMXoIGQ==
   dependencies:
     "@semantic-release/commit-analyzer" "^6.1.0"
     "@semantic-release/error" "^2.2.0"
