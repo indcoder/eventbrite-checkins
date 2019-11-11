@@ -131,7 +131,7 @@
     "rollup-plugin-typescript2": "^0.22.0",
     "semantic-release": "^15.13.27",
     "ts-jest": "^23.10.2",
-    "ts-node": "^7.0.1",
+    "ts-node": "^8.4.0",
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-config-standard": "^8.0.1",
