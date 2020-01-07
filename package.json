@@ -89,8 +89,8 @@
     ]
   },
   "devDependencies": {
-    "@commitlint/cli": "^8.2.0",
-    "@commitlint/config-conventional": "^7.1.2",
+    "@commitlint/cli": "^8.3.4",
+    "@commitlint/config-conventional": "^8.3.4",
     "@types/debug": "^4.1.5",
     "@types/faker": "^4.1.5",
     "@types/jest": "^24.0.16",
