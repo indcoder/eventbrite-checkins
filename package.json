@@ -142,7 +142,7 @@
   "dependencies": {
     "debug": "^4.1.1",
     "snyk": "^1.231.1",
-    "typed-rest-client": "^1.5.0"
+    "typed-rest-client": "^1.8.0"
   },
   "husky": {
     "hooks": {
