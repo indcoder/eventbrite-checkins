@@ -140,7 +140,7 @@
     "validate-commit-msg": "^2.14.0"
   },
   "dependencies": {
-    "debug": "^4.1.1",
+    "debug": "^4.3.1",
     "snyk": "^1.231.1",
     "typed-rest-client": "^1.5.0"
   },
